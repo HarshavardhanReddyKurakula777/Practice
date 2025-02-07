@@ -1,0 +1,41 @@
+{
+  "name" : "s3 job",
+  "jobMode" : "VISUAL",
+  "description" : "",
+  "role" : "arn:aws:iam::390402547718:role/Gglues3",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-390402547718-us-east-1/scripts/s3.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-390402547718-us-east-1/sparkHistoryLogs/",
+    "--enable-job-insights" : "true",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--enable-continuous-cloudwatch-log" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-390402547718-us-east-1/temporary/"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 10,
+  "timeout" : 480,
+  "maxCapacity" : 10.0,
+  "glueVersion" : "5.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "codeGenConfigurationNodes" : "{\"node-1738878042935\":{\"ApplyMapping\":{\"Inputs\":[\"node-1738876527199\"],\"Mapping\":[{\"Dropped\":false,\"FromPath\":[\"invoiceno\"],\"FromType\":\"string\",\"ToKey\":\"invoiceno\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"stockcode\"],\"FromType\":\"string\",\"ToKey\":\"stockcode\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"description\"],\"FromType\":\"string\",\"ToKey\":\"description\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"quantity\"],\"FromType\":\"long\",\"ToKey\":\"quantity\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"invoicedate\"],\"FromType\":\"string\",\"ToKey\":\"invoicedate\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"unitprice\"],\"FromType\":\"double\",\"ToKey\":\"unitprice\",\"ToType\":\"double\"},{\"Dropped\":false,\"FromPath\":[\"customerid\"],\"FromType\":\"long\",\"ToKey\":\"customerid\",\"ToType\":\"long\"},{\"Dropped\":false,\"FromPath\":[\"country\"],\"FromType\":\"string\",\"ToKey\":\"country\",\"ToType\":\"string\"}],\"Name\":\"Change Schema\"}},\"node-1738879038517\":{\"S3GlueParquetTarget\":{\"AutoDataQuality\":{\"EvaluationContext\":\"EvaluateDataQuality_node1738876435592\",\"IsEnabled\":true},\"Compression\":\"snappy\",\"Inputs\":[\"node-1738878736962\"],\"Name\":\"Amazon S3\",\"PartitionKeys\":[],\"Path\":\"s3://interviewprepcap\",\"SchemaChangePolicy\":{\"EnableUpdateCatalog\":false}}},\"node-1738878736962\":{\"SparkSQL\":{\"Inputs\":[\"node-1738878042935\"],\"Name\":\"SQL Query\",\"SqlAliases\":[{\"Alias\":\"myDataSource\",\"From\":\"node-1738878042935\"}],\"SqlQuery\":\"select * from myDataSource limit 5\"}},\"node-1738878859082\":{\"EvaluateDataQualityMultiFrame\":{\"AdditionalDataSources\":{},\"AdditionalOptions\":{\"performanceTuning.caching\":\"CACHE_NOTHING\"},\"Inputs\":[\"node-1738878736962\"],\"Name\":\"Evaluate Data Quality (Multiframe)\",\"PublishingOptions\":{\"CloudWatchMetricsEnabled\":true,\"ResultsPublishingEnabled\":true,\"ResultsS3Prefix\":\"\"},\"Ruleset\":\"# Example rules: Completeness \\\"colA\\\" between 0.4 and 0.8, ColumnCount > 10\\nRules = [\\n    RowCount > 1000\\n]\",\"StopJobOnFailureOptions\":{}}},\"node-1738876527199\":{\"S3CatalogSource\":{\"AdditionalOptions\":{},\"Database\":\"ordersschema\",\"Name\":\"Amazon S3\",\"PartitionPredicate\":\"\",\"Table\":\"source\"}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "Practice",
+    "branch" : "main",
+    "folder" : "s3 job"
+  }
+}
